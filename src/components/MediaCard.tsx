@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ParallaxCard } from "./ParallaxCard";
 import { PlaceholderVisual } from "./PlaceholderVisual";
 
 type MediaCardProps = {
@@ -50,7 +51,7 @@ export function MediaCard({
   const showPoster = !hasVideo && hasPoster;
 
   return (
-    <div className="card-lift group relative">
+    <ParallaxCard className="group relative" depth={10}>
       <article className="shadow-depth overflow-hidden rounded-2xl border border-border bg-card/90 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 group-hover:border-accent-violet/25 group-hover:shadow-depth-lg">
         <div
           className={`relative overflow-hidden bg-[#080810] ${
@@ -115,6 +116,6 @@ export function MediaCard({
           )}
         </div>
       </article>
-    </div>
+    </ParallaxCard>
   );
 }

@@ -201,14 +201,3 @@ body {
     radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 61, 122, 0.06), transparent 45%),
     #04040a;
 }
-
-.card-lift {
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card-lift:hover {
-  transform: translateY(-4px);
-}

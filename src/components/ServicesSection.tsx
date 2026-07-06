@@ -1,6 +1,7 @@
 "use client";
 
 import { services } from "@/data/site";
+import { ParallaxCard } from "./ParallaxCard";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -16,8 +17,8 @@ export function ServicesSection() {
 
         <Reveal className="grid gap-6 md:grid-cols-3" stagger={0.12}>
           {services.map((service) => (
-            <div key={service.id} className="card-lift group h-full">
-              <article className="shadow-depth flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 group-hover:border-accent-amber/25 group-hover:shadow-depth-lg">
+            <ParallaxCard key={service.id} className="h-full" depth={10}>
+              <article className="shadow-depth group flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 hover:border-accent-amber/25 hover:shadow-depth-lg">
                 <span className="font-mono text-[10px] tracking-[0.2em] text-accent-amber/80">
                   {service.id}
                 </span>
@@ -36,7 +37,7 @@ export function ServicesSection() {
                   ))}
                 </ul>
               </article>
-            </div>
+            </ParallaxCard>
           ))}
         </Reveal>
       </div>
