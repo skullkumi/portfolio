@@ -30,27 +30,28 @@ export function Reveal({
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const targets = stagger > 0 ? el.children : el;
+    const targets =
+      stagger > 0 ? gsap.utils.toArray<HTMLElement>(el.children) : el;
 
-    const tween = gsap.from(targets, {
-      y,
-      opacity: 0,
-      scale: scale < 1 ? scale : undefined,
-      duration: 0.75,
-      delay,
-      stagger: stagger || undefined,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 86%",
-        toggleActions: "play none none none",
-      },
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(targets, {
+        y,
+        opacity: 0,
+        scale: scale < 1 ? scale : undefined,
+        duration: 0.75,
+        delay,
+        stagger: stagger || undefined,
+        ease: "power3.out",
+        clearProps: "transform,opacity",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 86%",
+          toggleActions: "play none none none",
+        },
+      });
+    }, el);
 
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-    };
+    return () => ctx.revert();
   }, [delay, y, stagger, scale]);
 
   return (
