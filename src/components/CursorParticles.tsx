@@ -33,31 +33,33 @@ export function CursorParticles() {
 
     const pickColor = () => COLORS[(Math.random() * COLORS.length) | 0];
 
-    const spawn = (x: number, y: number, dx: number, dy: number, count = 1) => {
+    const spawn = (x: number, y: number, dx: number, dy: number, count = 2) => {
       const speed = Math.hypot(dx, dy);
       const nx = speed > 0.01 ? dx / speed : 0;
       const ny = speed > 0.01 ? dy / speed : 0;
       const pool = particlesRef.current;
 
       for (let i = 0; i < count; i++) {
-        if (pool.length >= 70) pool.shift();
+        if (pool.length >= 100) pool.shift();
 
-        const life = 0.22 + Math.random() * 0.18;
+        const spread = (Math.random() - 0.5) * 12;
+        const life = 0.26 + Math.random() * 0.2;
+
         pool.push({
-          x: x + (Math.random() - 0.5) * 4,
-          y: y + (Math.random() - 0.5) * 4,
-          vx: nx * (14 + Math.random() * 20) + (Math.random() - 0.5) * 30,
-          vy: ny * (14 + Math.random() * 20) + (Math.random() - 0.5) * 30,
+          x: x + (Math.random() - 0.5) * 5,
+          y: y + (Math.random() - 0.5) * 5,
+          vx: nx * (16 + Math.random() * 24) + (Math.random() - 0.5) * 36 + spread * 0.12,
+          vy: ny * (16 + Math.random() * 24) + (Math.random() - 0.5) * 36 + spread * 0.12,
           life,
           maxLife: life,
-          size: 1.5 + Math.random() * 2,
+          size: 1.5 + Math.random() * 2.5,
           color: pickColor(),
         });
       }
     };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
@@ -75,6 +77,8 @@ export function CursorParticles() {
     };
 
     const onMove = (e: MouseEvent) => {
+      if (document.hidden) return;
+
       const p = pointerRef.current;
       const dx = e.clientX - p.lastX;
       const dy = e.clientY - p.lastY;
@@ -84,8 +88,8 @@ export function CursorParticles() {
       p.y = e.clientY;
       p.active = true;
 
-      if (dist > 5) {
-        spawn(e.clientX, e.clientY, dx, dy, dist > 20 ? 2 : 1);
+      if (dist > 4) {
+        spawn(e.clientX, e.clientY, dx, dy, dist > 18 ? 3 : 2);
         p.lastX = e.clientX;
         p.lastY = e.clientY;
         schedule();
@@ -105,7 +109,9 @@ export function CursorParticles() {
       last = now;
 
       const pool = particlesRef.current;
-      if (pool.length === 0) {
+      const ptr = pointerRef.current;
+
+      if (pool.length === 0 && !ptr.active) {
         runningRef.current = false;
         return;
       }
@@ -120,17 +126,30 @@ export function CursorParticles() {
           continue;
         }
 
-        p.vx *= 0.9;
-        p.vy *= 0.9;
-        p.vy += 10 * dt;
+        p.vx *= 0.91;
+        p.vy *= 0.91;
+        p.vy += 11 * dt;
         p.x += p.vx * dt;
         p.y += p.vy * dt;
 
         const t = p.life / p.maxLife;
-        ctx.globalAlpha = t * t * 0.8;
+        const alpha = t * t;
+        const size = p.size * (0.35 + t * 0.65);
+
+        ctx.globalAlpha = alpha * 0.85;
         ctx.fillStyle = p.color;
-        const size = p.size * (0.4 + t * 0.6);
         ctx.fillRect(p.x - size * 0.5, p.y - size * 0.5, size, size);
+
+        ctx.globalAlpha = alpha * 0.22;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (ptr.active) {
+        ctx.globalAlpha = 0.5;
+        ctx.fillStyle = "#00e5c8";
+        ctx.fillRect(ptr.x - 1, ptr.y - 1, 2, 2);
       }
 
       ctx.globalAlpha = 1;

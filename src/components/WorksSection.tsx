@@ -2,12 +2,14 @@
 
 import { works } from "@/data/site";
 import { MediaCard } from "./MediaCard";
+import { ParallaxBg } from "./ParallaxBg";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
 export function WorksSection() {
   return (
     <section id="works" className="section-padding relative overflow-hidden bg-[#07070c]/88">
+      <ParallaxBg speed={0.2} />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="02"
@@ -15,7 +17,7 @@ export function WorksSection() {
           subtitle="音と光が交差する空間の記録"
         />
 
-        <Reveal className="grid gap-8" stagger={0.07}>
+        <Reveal className="grid gap-8" stagger={0.1}>
           {works.map((work, i) => (
             <div key={work.id} className={i % 2 === 1 ? "md:pl-12" : "md:pr-12"}>
               <MediaCard

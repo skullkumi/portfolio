@@ -19,7 +19,7 @@ export function Reveal({
   children,
   className = "",
   delay = 0,
-  y = 20,
+  y = 32,
   stagger = 0,
   scale = 1,
 }: RevealProps) {
@@ -36,13 +36,13 @@ export function Reveal({
       y,
       opacity: 0,
       scale: scale < 1 ? scale : undefined,
-      duration: 0.35,
+      duration: 0.55,
       delay,
       stagger: stagger || undefined,
-      ease: "power2.out",
+      ease: "power3.out",
       scrollTrigger: {
         trigger: el,
-        start: "top 94%",
+        start: "top 90%",
         toggleActions: "play none none none",
       },
     });

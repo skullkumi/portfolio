@@ -1,3 +1,11 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export function SectionHeading({
   index,
   title,
@@ -7,8 +15,34 @@ export function SectionHeading({
   title: string;
   subtitle: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const tween = gsap.from(el.children, {
+      y: 28,
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.08,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 88%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
+  }, []);
+
   return (
-    <div className="mb-12 md:mb-16">
+    <div ref={ref} className="mb-12 md:mb-16">
       <p className="font-mono text-xs tracking-[0.3em] text-accent/70">
         {index}
       </p>

@@ -15,7 +15,7 @@ export function Footer() {
           </p>
         </div>
         <p className="font-mono text-[10px] text-muted/60">
-          built with Next.js / GSAP
+          built with Next.js / GSAP / Lenis
         </p>
       </div>
     </footer>
