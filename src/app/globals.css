@@ -201,20 +201,3 @@ body {
     radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 61, 122, 0.06), transparent 45%),
     #04040a;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .ambient-css-bg {
-    animation: ambient-drift 24s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes ambient-drift {
-  0% {
-    filter: hue-rotate(0deg);
-    transform: scale(1);
-  }
-  100% {
-    filter: hue-rotate(12deg);
-    transform: scale(1.04);
-  }
-}

@@ -12,32 +12,58 @@ type ShaderCanvasProps = {
   scrollProgress?: React.MutableRefObject<number>;
   interactive?: boolean;
   dprCap?: number;
+  fpsCap?: number;
 };
+
+function ShaderFallback({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#1a1030_0%,_#080812_45%,_#04040a_100%)] ${className}`}
+      aria-hidden
+    />
+  );
+}
 
 export function ShaderCanvas({
   className = "",
   scrollProgress,
-  interactive = true,
-  dprCap = 1.25,
+  interactive = false,
+  dprCap = 1,
+  fpsCap = 30,
 }: ShaderCanvasProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const rafRef = useRef(0);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [useShader, setUseShader] = useState(true);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setUseShader(false);
+      return;
+    }
+
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
     if (!wrap || !canvas) return;
 
-    const gl2 = canvas.getContext("webgl2", { antialias: false, alpha: false });
+    const gl2 = canvas.getContext("webgl2", {
+      antialias: false,
+      alpha: false,
+      powerPreference: "low-power",
+    });
     const gl1 = gl2
       ? null
-      : canvas.getContext("webgl", { antialias: false, alpha: false });
+      : canvas.getContext("webgl", {
+          antialias: false,
+          alpha: false,
+          powerPreference: "low-power",
+        });
     const gl = gl2 ?? gl1;
 
     if (!gl) {
+      setUseShader(false);
       setErrorMsg("WebGL not supported");
       return;
     }
@@ -54,9 +80,7 @@ export function ShaderCanvas({
       gl.shaderSource(s, src);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-        const log = gl.getShaderInfoLog(s) ?? "unknown error";
-        console.error("Shader compile:", log);
-        setErrorMsg(log.slice(0, 120));
+        console.error("Shader compile:", gl.getShaderInfoLog(s));
         return null;
       }
       return s;
@@ -64,7 +88,10 @@ export function ShaderCanvas({
 
     const vs = compile(gl.VERTEX_SHADER, vsSource);
     const fs = compile(gl.FRAGMENT_SHADER, fsSource);
-    if (!vs || !fs) return;
+    if (!vs || !fs) {
+      setUseShader(false);
+      return;
+    }
 
     const program = gl.createProgram();
     if (!program) return;
@@ -72,8 +99,7 @@ export function ShaderCanvas({
     gl.attachShader(program, fs);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      const log = gl.getProgramInfoLog(program) ?? "link error";
-      setErrorMsg(log.slice(0, 120));
+      setUseShader(false);
       return;
     }
     gl.useProgram(program);
@@ -118,7 +144,6 @@ export function ShaderCanvas({
     };
 
     resize();
-    requestAnimationFrame(resize);
     const ro = new ResizeObserver(() => resize());
     ro.observe(wrap);
 
@@ -132,12 +157,20 @@ export function ShaderCanvas({
         y: (rect.height - (e.clientY - rect.top)) * dpr,
       };
     };
-    window.addEventListener("mousemove", onMove);
+    if (interactive) window.addEventListener("mousemove", onMove);
 
+    const frameInterval = 1000 / fpsCap;
+    let lastDraw = 0;
     const start = performance.now();
+
     const render = (now: number) => {
       rafRef.current = requestAnimationFrame(render);
-      if (!intersecting || document.hidden) return;
+
+      const scrolledPast = (scrollProgress?.current ?? 0) > 0.12;
+      if (!intersecting || document.hidden || scrolledPast) return;
+      if (now - lastDraw < frameInterval) return;
+
+      lastDraw = now;
       if (canvas.width > 0 && canvas.height > 0) {
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform2f(uMouse, mouseRef.current.x, mouseRef.current.y);
@@ -155,9 +188,13 @@ export function ShaderCanvas({
       cancelAnimationFrame(rafRef.current);
       io.disconnect();
       ro.disconnect();
-      window.removeEventListener("mousemove", onMove);
+      if (interactive) window.removeEventListener("mousemove", onMove);
     };
-  }, [dprCap, interactive, scrollProgress]);
+  }, [dprCap, fpsCap, interactive, scrollProgress]);
+
+  if (!useShader) {
+    return <ShaderFallback className={className} />;
+  }
 
   return (
     <div ref={wrapRef} className={`absolute inset-0 ${className}`}>

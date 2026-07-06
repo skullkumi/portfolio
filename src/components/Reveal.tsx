@@ -19,7 +19,7 @@ export function Reveal({
   children,
   className = "",
   delay = 0,
-  y = 28,
+  y = 20,
   stagger = 0,
   scale = 1,
 }: RevealProps) {
@@ -28,6 +28,7 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const targets = stagger > 0 ? el.children : el;
 
@@ -35,13 +36,13 @@ export function Reveal({
       y,
       opacity: 0,
       scale: scale < 1 ? scale : undefined,
-      duration: 0.5,
+      duration: 0.35,
       delay,
       stagger: stagger || undefined,
       ease: "power2.out",
       scrollTrigger: {
         trigger: el,
-        start: "top 92%",
+        start: "top 94%",
         toggleActions: "play none none none",
       },
     });

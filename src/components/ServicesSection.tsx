@@ -1,7 +1,6 @@
 "use client";
 
 import { services } from "@/data/site";
-import { ParallaxBg } from "./ParallaxBg";
 import { ParallaxCard } from "./ParallaxCard";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -9,7 +8,6 @@ import { SectionHeading } from "./SectionHeading";
 export function ServicesSection() {
   return (
     <section id="services" className="section-padding relative overflow-hidden">
-      <ParallaxBg speed={0.1} />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="03"

@@ -2,14 +2,12 @@
 
 import { shaders } from "@/data/site";
 import { MediaCard } from "./MediaCard";
-import { ParallaxBg } from "./ParallaxBg";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
 export function ShadersSection() {
   return (
     <section id="shaders" className="section-padding relative overflow-hidden">
-      <ParallaxBg speed={0.15} />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="01"

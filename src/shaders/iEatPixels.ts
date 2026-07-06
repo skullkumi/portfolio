@@ -23,7 +23,7 @@ void main() {
   float s = 0.0;
   vec3 col = vec3(0.0);
 
-  for (float i = 0.0; max(d, i++) < 15.0; col += (cos(s - 0.4 * u_time + vec3(0.0, 1.0, 8.0)) + 1.1) / d) {
+  for (float i = 0.0; max(d, i++) < 12.0; col += (cos(s - 0.4 * u_time + vec3(0.0, 1.0, 8.0)) + 1.1) / d) {
     vec3 p = z * normalize(vec3(2.0 * fragCoord, 0.0) - u_resolution.xyy);
     vec3 a = normalize(cos(vec3(5.0, 0.0, 1.0) + t / 4.0));
     p.z += 2.8;
@@ -65,7 +65,7 @@ void main() {
   float s = 0.0;
   vec3 col = vec3(0.0);
 
-  for (int i = 0; i < 15; i++) {
+  for (int i = 0; i < 12; i++) {
     vec3 p = z * normalize(vec3(2.0 * fragCoord, 0.0) - u_resolution.xyy);
     vec3 a = normalize(cos(vec3(5.0, 0.0, 1.0) + t / 4.0));
     p.z += 2.8;
