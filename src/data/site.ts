@@ -81,7 +81,7 @@ export const works: WorkItem[] = [
     id: "kumi-testing-world",
     title: "KumiTestingWorld",
     description:
-      "VRChat Labs 公開の実験ワールド。VRMV・シェーダー・パーティクル演出の検証と、音と光の空間設計を試すテストベッド。",
+      "Animation を1つ入れて動作確認しているテスト用ワールド。VR空間演出の実験・検証用に制作。",
     videoSrc: "/assets/works/kumi-testing-world.mp4",
     posterSrc: "/assets/works/kumi-testing-world-poster.jpg",
     linkUrl:
@@ -89,24 +89,6 @@ export const works: WorkItem[] = [
     linkLabel: "VRChat で見る",
     tags: ["VRChat", "VRMV", "Shader", "World"],
     year: "2026",
-  },
-  {
-    id: "work-02",
-    title: "Project Beta",
-    description: "イベント向けビジュアルのプロトタイプ。撮影・録画は準備中。",
-    videoSrc: "/assets/works/work-02.mp4",
-    posterSrc: "/assets/works/work-02-poster.jpg",
-    tags: ["Unity", "VFX"],
-    year: "2026",
-  },
-  {
-    id: "work-03",
-    title: "Project Gamma",
-    description: "デジタル空間の質感とリズムを探求した個人制作。撮影・録画は準備中。",
-    videoSrc: "/assets/works/work-03.mp4",
-    posterSrc: "/assets/works/work-03-poster.jpg",
-    tags: ["Shader", "Experimental"],
-    year: "2025",
   },
 ];
 
