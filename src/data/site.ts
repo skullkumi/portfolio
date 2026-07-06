@@ -4,7 +4,6 @@ export const site = {
   description:
     "VRMV・Unity Shader・パーティクルで、音と光が交差する空間を設計するクリエイター。",
   locale: "ja" as const,
-  version: "0.1.0",
 };
 
 export const services = [

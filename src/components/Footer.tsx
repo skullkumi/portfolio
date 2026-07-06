@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { siteVersion } from "@/lib/version";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -11,7 +11,7 @@ export function Footer() {
             &copy; {year} kumi — 音と光の空間設計
           </p>
           <p className="mt-1 font-mono text-[10px] text-muted/70">
-            site v{site.version}
+            site v{siteVersion}
           </p>
         </div>
         <p className="font-mono text-[10px] text-muted/60">
