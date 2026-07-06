@@ -3,11 +3,13 @@
 import { works } from "@/data/site";
 import { MediaCard } from "./MediaCard";
 import { Reveal } from "./Reveal";
+import { SectionGrid } from "./SectionGrid";
 import { SectionHeading } from "./SectionHeading";
 
 export function WorksSection() {
   return (
     <section id="works" className="section-padding relative overflow-hidden bg-[#07070c]/88">
+      <SectionGrid tone="violet" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="02"
@@ -27,6 +29,8 @@ export function WorksSection() {
                 linkUrl={work.linkUrl}
                 linkLabel={work.linkLabel}
                 aspect="wide"
+                parallax
+                parallaxDepth={6}
               />
             </div>
           ))}

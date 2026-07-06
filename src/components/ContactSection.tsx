@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { contact } from "@/data/site";
 import { Reveal } from "./Reveal";
+import { SectionGrid } from "./SectionGrid";
 import { SectionHeading } from "./SectionHeading";
 
 export function ContactSection() {
@@ -15,6 +16,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden bg-[#07070c]/88">
+      <SectionGrid tone="magenta" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="05"

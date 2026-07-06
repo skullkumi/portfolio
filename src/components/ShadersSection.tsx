@@ -3,11 +3,13 @@
 import { shaders } from "@/data/site";
 import { MediaCard } from "./MediaCard";
 import { Reveal } from "./Reveal";
+import { SectionGrid } from "./SectionGrid";
 import { SectionHeading } from "./SectionHeading";
 
 export function ShadersSection() {
   return (
     <section id="shaders" className="section-padding relative overflow-hidden">
+      <SectionGrid tone="cyan" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="01"

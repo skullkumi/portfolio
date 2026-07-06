@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 import { ParallaxCard } from "./ParallaxCard";
 import { PlaceholderVisual } from "./PlaceholderVisual";
 
@@ -13,7 +13,29 @@ type MediaCardProps = {
   aspect?: "video" | "wide";
   linkUrl?: string;
   linkLabel?: string;
+  parallax?: boolean;
+  parallaxDepth?: number;
 };
+
+function CardShell({
+  parallax,
+  parallaxDepth,
+  children,
+}: {
+  parallax: boolean;
+  parallaxDepth: number;
+  children: ReactNode;
+}) {
+  if (parallax) {
+    return (
+      <ParallaxCard className="group relative" depth={parallaxDepth}>
+        {children}
+      </ParallaxCard>
+    );
+  }
+
+  return <div className="group relative">{children}</div>;
+}
 
 export function MediaCard({
   title,
@@ -24,6 +46,8 @@ export function MediaCard({
   aspect = "video",
   linkUrl,
   linkLabel = "View",
+  parallax = false,
+  parallaxDepth = 6,
 }: MediaCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasVideo, setHasVideo] = useState(false);
@@ -49,39 +73,54 @@ export function MediaCard({
   }, [videoSrc, posterSrc]);
 
   const showPoster = !hasVideo && hasPoster;
+  const aspectClass = aspect === "wide" ? "aspect-[21/9]" : "aspect-video";
+
+  const mediaInner = (
+    <>
+      {hasVideo ? (
+        <video
+          ref={videoRef}
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+          src={videoSrc}
+          poster={posterSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      ) : showPoster ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={posterSrc}
+          alt=""
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+        />
+      ) : (
+        <PlaceholderVisual label={title} />
+      )}
+      <div className="scanline absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050508] via-transparent to-transparent opacity-80" />
+    </>
+  );
 
   return (
-    <ParallaxCard className="group relative" depth={10}>
+    <CardShell parallax={parallax} parallaxDepth={parallaxDepth}>
       <article className="shadow-depth overflow-hidden rounded-2xl border border-border bg-card/90 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 group-hover:border-accent-violet/25 group-hover:shadow-depth-lg">
-        <div
-          className={`relative overflow-hidden bg-[#080810] ${
-            aspect === "wide" ? "aspect-[21/9]" : "aspect-video"
-          }`}
-        >
-          {hasVideo ? (
-            <video
-              ref={videoRef}
-              className="h-full w-full object-cover"
-              src={videoSrc}
-              poster={posterSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          ) : showPoster ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={posterSrc}
-              alt=""
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <PlaceholderVisual label={title} />
-          )}
-          <div className="scanline absolute inset-0" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050508] via-transparent to-transparent opacity-80" />
-        </div>
+        {linkUrl ? (
+          <a
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`relative block overflow-hidden bg-[#080810] ${aspectClass} cursor-pointer`}
+            aria-label={`${title}を開く`}
+          >
+            {mediaInner}
+          </a>
+        ) : (
+          <div className={`relative overflow-hidden bg-[#080810] ${aspectClass}`}>
+            {mediaInner}
+          </div>
+        )}
 
         <div className="space-y-3 p-5 md:p-6">
           <div className="flex flex-wrap gap-2">
@@ -116,6 +155,6 @@ export function MediaCard({
           )}
         </div>
       </article>
-    </ParallaxCard>
+    </CardShell>
   );
 }

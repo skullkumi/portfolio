@@ -201,3 +201,42 @@ body {
     radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 61, 122, 0.06), transparent 45%),
     #04040a;
 }
+
+.section-grid {
+  opacity: 0.28;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.section-grid-cyan {
+  background-image:
+    linear-gradient(rgba(0, 229, 200, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 200, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.section-grid-violet {
+  background-image:
+    linear-gradient(rgba(124, 107, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 107, 255, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.section-grid-amber {
+  background-image:
+    linear-gradient(rgba(245, 166, 35, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 166, 35, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.section-grid-magenta {
+  background-image:
+    linear-gradient(rgba(255, 61, 122, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 61, 122, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
