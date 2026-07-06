@@ -78,16 +78,16 @@ export type WorkItem = {
 
 export const works: WorkItem[] = [
   {
-    id: "kumi-testing-world",
-    title: "KumiTestingWorld",
+    id: "kumi-animation-world",
+    title: "KumiAnimationWorld",
     description:
-      "Animation を1つ入れて動作確認しているテスト用ワールド。VR空間演出の実験・検証用に制作。",
-    videoSrc: "/assets/works/kumi-testing-world.mp4",
-    posterSrc: "/assets/works/kumi-testing-world-poster.jpg",
+      "Animation を1つ配置したテスト用ワールド。VR空間演出の実験・検証用に制作。",
+    videoSrc: "/assets/works/kumi-animation-world.mp4",
+    posterSrc: "/assets/works/kumi-animation-world-poster.jpg",
     linkUrl:
       "https://vrchat.com/home/world/wrld_9e9fbc9c-67f8-46ae-8515-dcfe99dec84b/info",
     linkLabel: "VRChat で見る",
-    tags: ["VRChat", "VRMV", "Shader", "World"],
+    tags: ["VRChat", "Animation", "World"],
     year: "2026",
   },
 ];
