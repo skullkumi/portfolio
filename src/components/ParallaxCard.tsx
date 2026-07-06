@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 type ParallaxCardProps = {
@@ -15,6 +15,7 @@ export function ParallaxCard({
   depth = 12,
 }: ParallaxCardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const enabledRef = useRef(true);
   const hovering = useMotionValue(0);
   const hoverSpring = useSpring(hovering, { stiffness: 200, damping: 22 });
 
@@ -30,7 +31,12 @@ export function ParallaxCard({
   const translateY = useTransform(springY, [-0.5, 0.5], [-depth, depth]);
   const liftZ = useTransform(hoverSpring, [0, 1], [0, -12]);
 
+  useEffect(() => {
+    enabledRef.current = !window.matchMedia("(pointer: coarse)").matches;
+  }, []);
+
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!enabledRef.current) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

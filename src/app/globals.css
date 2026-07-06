@@ -193,3 +193,28 @@ body {
     inset 0 0 0 1px rgba(255, 255, 255, 0.06),
     inset 0 2px 0 rgba(255, 255, 255, 0.04);
 }
+
+.ambient-css-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 229, 200, 0.08), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 80% 60%, rgba(124, 107, 255, 0.1), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 61, 122, 0.06), transparent 45%),
+    #04040a;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ambient-css-bg {
+    animation: ambient-drift 24s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes ambient-drift {
+  0% {
+    filter: hue-rotate(0deg);
+    transform: scale(1);
+  }
+  100% {
+    filter: hue-rotate(12deg);
+    transform: scale(1.04);
+  }
+}

@@ -3,12 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  AMBIENT_DEPTH_SHADER,
-  AMBIENT_DEPTH_SHADER_WEBGL1,
-} from "@/shaders/ambientDepth";
 import { ShaderCanvas } from "./ShaderCanvas";
-import { ShaderRunner } from "./ShaderRunner";
 import { ScreenOverlay } from "./ScreenOverlay";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,13 +34,7 @@ export function HeroShaderDisplay({ sectionRef }: HeroShaderDisplayProps) {
 
   return (
     <div className="absolute inset-0">
-      <ShaderRunner
-        fragmentWebGL2={AMBIENT_DEPTH_SHADER}
-        fragmentWebGL1={AMBIENT_DEPTH_SHADER_WEBGL1}
-        className="absolute inset-0"
-        dprCap={1.5}
-      />
-      <ShaderCanvas scrollProgress={scrollRef} />
+      <ShaderCanvas scrollProgress={scrollRef} dprCap={1.25} />
       <ScreenOverlay />
       <div className="pointer-events-none absolute inset-x-0 top-20 z-10 flex items-center justify-between px-5 md:top-24 md:px-10">
         <span className="font-mono text-[9px] tracking-[0.25em] text-white/30">

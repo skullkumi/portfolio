@@ -11,12 +11,14 @@ type ShaderCanvasProps = {
   className?: string;
   scrollProgress?: React.MutableRefObject<number>;
   interactive?: boolean;
+  dprCap?: number;
 };
 
 export function ShaderCanvas({
   className = "",
   scrollProgress,
   interactive = true,
+  dprCap = 1.25,
 }: ShaderCanvasProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -92,8 +94,17 @@ export function ShaderCanvas({
     const uTime = gl.getUniformLocation(program, "u_time");
     const uScroll = gl.getUniformLocation(program, "u_scroll");
 
+    let intersecting = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        intersecting = entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    io.observe(wrap);
+
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
       if (w < 2 || h < 2) return;
@@ -125,6 +136,8 @@ export function ShaderCanvas({
 
     const start = performance.now();
     const render = (now: number) => {
+      rafRef.current = requestAnimationFrame(render);
+      if (!intersecting || document.hidden) return;
       if (canvas.width > 0 && canvas.height > 0) {
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform2f(uMouse, mouseRef.current.x, mouseRef.current.y);
@@ -134,17 +147,17 @@ export function ShaderCanvas({
         }
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
-      rafRef.current = requestAnimationFrame(render);
     };
     rafRef.current = requestAnimationFrame(render);
     setErrorMsg(null);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
+      io.disconnect();
       ro.disconnect();
       window.removeEventListener("mousemove", onMove);
     };
-  }, [interactive, scrollProgress]);
+  }, [dprCap, interactive, scrollProgress]);
 
   return (
     <div ref={wrapRef} className={`absolute inset-0 ${className}`}>
