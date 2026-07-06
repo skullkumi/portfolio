@@ -23,14 +23,14 @@ export function SectionHeading({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const tween = gsap.from(el.children, {
-      y: 28,
+      y: 36,
       opacity: 0,
-      duration: 0.7,
-      stagger: 0.08,
+      duration: 0.8,
+      stagger: 0.1,
       ease: "power3.out",
       scrollTrigger: {
         trigger: el,
-        start: "top 88%",
+        start: "top 86%",
         toggleActions: "play none none none",
       },
     });

@@ -22,7 +22,7 @@ export function ContactSection() {
           subtitle="コラボのご相談はこちらから"
         />
 
-        <Reveal className="grid gap-10 lg:grid-cols-2" stagger={0.07}>
+        <Reveal className="grid gap-10 lg:grid-cols-2" stagger={0.12}>
           <div className="space-y-6">
             <p className="font-mono text-sm text-muted">
               $ kumi connect --channel open
