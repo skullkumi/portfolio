@@ -38,7 +38,7 @@ kumi portfolio — 素材ファイル配置ガイド
 
   Works（制作実績）
     public/assets/works/kumi-animation-world.mp4
-    public/assets/works/kumi-animation-world-poster.jpg
+    public/assets/works/kumi-testing-world-poster.jpg
 
 
 ■ ライブシェーダー（shader-live）

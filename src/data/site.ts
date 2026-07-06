@@ -81,13 +81,13 @@ export const works: WorkItem[] = [
     id: "kumi-animation-world",
     title: "KumiAnimationWorld",
     description:
-      "Animation を1つ配置したテスト用ワールド。VR空間演出の実験・検証用に制作。",
+      "Animationが見れるワールド。VR空間演出の実験・検証用に制作。",
     videoSrc: "/assets/works/kumi-animation-world.mp4",
-    posterSrc: "/assets/works/kumi-animation-world-poster.jpg",
+    posterSrc: "/assets/works/kumi-testing-world-poster.jpg",
     linkUrl:
       "https://vrchat.com/home/world/wrld_9e9fbc9c-67f8-46ae-8515-dcfe99dec84b/info",
     linkLabel: "VRChat で見る",
-    tags: ["VRChat", "Animation", "World"],
+    tags: ["VRChat", "VRMV", "Shader", "World"],
     year: "2026",
   },
 ];
