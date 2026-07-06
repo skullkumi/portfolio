@@ -1,5 +1,6 @@
 import { AboutSection } from "@/components/AboutSection";
 import { ContactSection } from "@/components/ContactSection";
+import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";
 import { GlobalAmbientBackground } from "@/components/GlobalAmbientBackground";
 import { Hero } from "@/components/Hero";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <GlobalAmbientBackground />
+      <CursorParticles />
       <Navigation />
       <main className="relative z-10">
         <Hero />

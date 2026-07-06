@@ -34,7 +34,7 @@ export function HeroShaderDisplay({ sectionRef }: HeroShaderDisplayProps) {
 
   return (
     <div className="absolute inset-0">
-      <ShaderCanvas scrollProgress={scrollRef} dprCap={1} fpsCap={30} interactive={false} />
+      <ShaderCanvas scrollProgress={scrollRef} dprCap={0.75} fpsCap={24} interactive={false} />
       <ScreenOverlay className="opacity-80" />
       <div className="pointer-events-none absolute inset-x-0 top-20 z-10 flex items-center justify-between px-5 md:top-24 md:px-10">
         <span className="font-mono text-[9px] tracking-[0.25em] text-white/30">
