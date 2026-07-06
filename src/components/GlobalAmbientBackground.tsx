@@ -5,7 +5,7 @@ export function GlobalAmbientBackground() {
       aria-hidden
     >
       <div className="ambient-css-bg absolute inset-0" />
-      <div className="absolute inset-0 bg-[#04040a]/60" />
+      <div className="absolute inset-0 bg-[#08060a]/60" />
     </div>
   );
 }

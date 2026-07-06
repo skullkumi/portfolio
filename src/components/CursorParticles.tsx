@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const COLORS = ["#00e5c8", "#ff3d7a", "#7c6bff", "#9ec8ff", "#f5a623"];
+const COLORS = ["#ff5c9a", "#ff3388", "#ff9ec7", "#ffd24a", "#fff0a8"];
 
 type Particle = {
   x: number;
@@ -148,7 +148,7 @@ export function CursorParticles() {
 
       if (ptr.active) {
         ctx.globalAlpha = 0.5;
-        ctx.fillStyle = "#00e5c8";
+        ctx.fillStyle = "#ff5c9a";
         ctx.fillRect(ptr.x - 1, ptr.y - 1, 2, 2);
       }
 

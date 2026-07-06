@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #04040a;
-  --foreground: #e4e4ec;
-  --muted: #6e6e88;
-  --accent: #00e5c8;
-  --accent-magenta: #ff3d7a;
-  --accent-amber: #f5a623;
-  --accent-violet: #7c6bff;
-  --accent-ice: #9ec8ff;
-  --accent-coral: #ff6b4a;
+  --background: #08060a;
+  --foreground: #ece8ee;
+  --muted: #887888;
+  --accent: #ff5c9a;
+  --accent-magenta: #ff3388;
+  --accent-amber: #ffd24a;
+  --accent-violet: #ff9ec7;
+  --accent-ice: #fff0a8;
+  --accent-coral: #ffb84d;
   --grid: #ffffff07;
   --card: #0a0a12;
   --border: #ffffff14;
@@ -79,9 +79,9 @@ body {
 .text-spectrum {
   background: linear-gradient(
     105deg,
-    var(--accent-ice) 0%,
-    var(--accent) 35%,
-    var(--accent-violet) 65%,
+    var(--accent-amber) 0%,
+    var(--accent-ice) 30%,
+    var(--accent) 65%,
     var(--accent-magenta) 100%
   );
   -webkit-background-clip: text;
@@ -196,10 +196,10 @@ body {
 
 .ambient-css-bg {
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 229, 200, 0.08), transparent 55%),
-    radial-gradient(ellipse 70% 45% at 80% 60%, rgba(124, 107, 255, 0.1), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 61, 122, 0.06), transparent 45%),
-    #04040a;
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255, 92, 154, 0.1), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 80% 60%, rgba(255, 210, 74, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 51, 136, 0.06), transparent 45%),
+    #08060a;
 }
 
 .section-grid {
@@ -213,30 +213,16 @@ body {
   );
 }
 
-.section-grid-cyan {
+.section-grid-pink {
   background-image:
-    linear-gradient(rgba(0, 229, 200, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 200, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255, 92, 154, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 92, 154, 0.06) 1px, transparent 1px);
   background-size: 52px 52px;
 }
 
-.section-grid-violet {
+.section-grid-yellow {
   background-image:
-    linear-gradient(rgba(124, 107, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 107, 255, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(255, 210, 74, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 210, 74, 0.06) 1px, transparent 1px);
   background-size: 56px 56px;
-}
-
-.section-grid-amber {
-  background-image:
-    linear-gradient(rgba(245, 166, 35, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 166, 35, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.section-grid-magenta {
-  background-image:
-    linear-gradient(rgba(255, 61, 122, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 61, 122, 0.05) 1px, transparent 1px);
-  background-size: 60px 60px;
 }

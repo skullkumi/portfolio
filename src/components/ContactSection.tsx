@@ -16,7 +16,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden bg-[#07070c]/88">
-      <SectionGrid tone="magenta" />
+      <SectionGrid tone="yellow" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="05"

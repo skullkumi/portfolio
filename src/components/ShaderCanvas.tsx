@@ -18,7 +18,7 @@ type ShaderCanvasProps = {
 function ShaderFallback({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#1a1030_0%,_#080812_45%,_#04040a_100%)] ${className}`}
+      className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#1a0818_0%,_#100810_45%,_#08060a_100%)] ${className}`}
       aria-hidden
     />
   );

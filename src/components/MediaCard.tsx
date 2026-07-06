@@ -105,7 +105,7 @@ export function MediaCard({
 
   return (
     <CardShell parallax={parallax} parallaxDepth={parallaxDepth}>
-      <article className="shadow-depth overflow-hidden rounded-2xl border border-border bg-card/90 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 group-hover:border-accent-violet/25 group-hover:shadow-depth-lg">
+      <article className="shadow-depth overflow-hidden rounded-2xl border border-border bg-card/90 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 group-hover:border-accent/30 group-hover:shadow-depth-lg">
         {linkUrl ? (
           <a
             href={linkUrl}
@@ -142,14 +142,14 @@ export function MediaCard({
               href={linkUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent transition hover:text-[#00f0d4]"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent transition hover:text-accent-amber"
             >
               {linkLabel}
               <span aria-hidden>↗</span>
             </a>
           )}
           {!hasVideo && !showPoster && (
-            <p className="font-mono text-xs text-accent-ice/70">
+            <p className="font-mono text-xs text-accent-amber/70">
               → public/assets/ に MP4 を配置すると表示されます
             </p>
           )}

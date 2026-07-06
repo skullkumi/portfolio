@@ -8,7 +8,7 @@ import { SectionHeading } from "./SectionHeading";
 export function ServicesSection() {
   return (
     <section id="services" className="section-padding relative overflow-hidden">
-      <SectionGrid tone="amber" />
+      <SectionGrid tone="pink" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="03"
@@ -20,7 +20,7 @@ export function ServicesSection() {
           {services.map((service) => (
             <article
               key={service.id}
-              className="shadow-depth flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 backdrop-blur-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-accent-amber/25 hover:shadow-depth-lg"
+              className="shadow-depth flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 backdrop-blur-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-depth-lg"
             >
               <span className="font-mono text-[10px] tracking-[0.2em] text-accent-amber/80">
                 {service.id}

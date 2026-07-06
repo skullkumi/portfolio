@@ -1,8 +1,8 @@
 type SectionGridProps = {
-  tone?: "cyan" | "violet" | "amber" | "magenta";
+  tone?: "pink" | "yellow";
 };
 
-export function SectionGrid({ tone = "cyan" }: SectionGridProps) {
+export function SectionGrid({ tone = "pink" }: SectionGridProps) {
   return (
     <div
       className={`section-grid pointer-events-none absolute inset-0 section-grid-${tone}`}

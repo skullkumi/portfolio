@@ -56,11 +56,11 @@ export function Hero() {
       <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-5 pb-14 pt-28 md:px-10 md:pb-20">
         <div ref={contentRef} className="mx-auto w-full max-w-3xl text-center">
           <p className="hero-eyebrow mb-5 font-mono text-[10px] uppercase tracking-[0.45em] text-white/50">
-            <span className="text-accent-ice">signal</span>
+            <span className="text-accent-amber">signal</span>
             <span> · </span>
-            <span className="text-accent-magenta">pixel</span>
+            <span className="text-accent">pixel</span>
             <span> · </span>
-            <span className="text-accent-amber">space</span>
+            <span className="text-accent-ice">space</span>
           </p>
 
           <h1 className="hero-title text-depth text-6xl font-medium tracking-tighter text-white md:text-8xl lg:text-9xl">
@@ -79,13 +79,13 @@ export function Hero() {
           <div className="hero-cta mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <a
               href="#shaders"
-              className="shadow-depth inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-background transition hover:bg-[#00f0d4]"
+              className="shadow-depth inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-background transition hover:bg-accent-magenta"
             >
               view works
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/30 px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-white backdrop-blur-sm transition hover:border-accent-violet/50"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/30 px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-white backdrop-blur-sm transition hover:border-accent-amber/50"
             >
               collaborate
             </a>
