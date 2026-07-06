@@ -1,0 +1,56 @@
+kumi portfolio — 素材ファイル配置ガイド
+========================================
+
+このフォルダに素材を置くと、サイト上のプレースホルダーが自動で差し替わります。
+ファイル名は下記のとおり合わせてください。
+
+
+■ 動画（MP4）— 推奨スペック
+────────────────────────────
+  形式:     MP4 (H.264)
+  解像度:   1920×1080（16:9）推奨。Shaderカードは 1280×720 でも可
+  FPS:      30 または 60
+  長さ:     5〜15秒のループ（先頭と末尾が自然につながるとベスト）
+  サイズ:   1ファイル 5〜15MB 以内を目安（Vercel の転送量に注意）
+  音声:     なし（ミュート）推奨 — ブラウザ自動再生のため
+
+  Unity での録画方法:
+    - Unity Recorder（Package Manager からインストール）
+    - OBS Studio でゲーム画面をキャプチャ
+    - ループ用に同じフレームで開始・終了すると綺麗
+
+
+■ ポスター画像（サムネイル）— 動画の代わり・読み込み前表示
+────────────────────────────
+  形式:     JPG または WebP
+  解像度:   動画と同じアスペクト比（16:9）
+  サイズ:   200KB 以内推奨
+
+
+■ 配置パス一覧
+────────────────────────────
+
+  Shaders（録画プレビュー用）
+    public/assets/shaders/shader-02.mp4
+    public/assets/shaders/shader-02-poster.jpg
+    public/assets/shaders/shader-03.mp4
+    public/assets/shaders/shader-03-poster.jpg
+
+  Works（制作実績）
+    public/assets/works/kumi-testing-world.mp4
+    public/assets/works/kumi-testing-world-poster.jpg
+    public/assets/works/work-02.mp4
+    public/assets/works/work-02-poster.jpg
+    public/assets/works/work-03.mp4
+    public/assets/works/work-03-poster.jpg
+
+
+■ ライブシェーダー（shader-live）
+────────────────────────────
+  ファイル不要。ブラウザ上で WebGL がリアルタイム描画します。
+  Unity の Shader そのものは載せられませんが、雰囲気の参考プレビューとして機能します。
+
+
+■ 作品情報の編集
+────────────────────────────
+  タイトル・説明文・タグは src/data/site.ts を編集してください。
