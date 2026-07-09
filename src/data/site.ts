@@ -1,6 +1,6 @@
 export const site = {
   name: "kumi",
-  tagline: "音と光の空間設計。クリエイター",
+  tagline: "Spatial design in sound and light.",
   description:
     "VRMV・Unity Shader・パーティクルで、音と光が交差する空間を設計するクリエイター。",
   locale: "ja" as const,

@@ -81,7 +81,7 @@ export function Hero() {
               href="#works"
               className="shadow-depth inline-flex items-center justify-center rounded-full bg-accent/90 px-8 py-3.5 text-sm text-[#0a080c] transition hover:bg-accent"
             >
-              作品を見る
+              View Works
               <span className="ml-2 font-mono text-[10px] uppercase tracking-wider opacity-70">
                 Works
               </span>
@@ -90,7 +90,7 @@ export function Hero() {
               href="#contact"
               className="inline-flex items-center justify-center rounded-full border border-white/15 bg-black/25 px-8 py-3.5 text-sm text-[#f5f0e8] backdrop-blur-sm transition hover:border-accent-amber/40"
             >
-              相談する
+              Collaborate
               <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-white/45">
                 Contact
               </span>
