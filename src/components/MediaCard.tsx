@@ -133,7 +133,7 @@ export function MediaCard({
               </span>
             ))}
           </div>
-          <h3 className="text-lg font-medium tracking-tight text-foreground md:text-xl">
+          <h3 className="font-display text-lg font-medium tracking-tight text-foreground md:text-xl">
             {title}
           </h3>
           <p className="text-sm leading-relaxed text-muted">{description}</p>

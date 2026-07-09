@@ -46,7 +46,7 @@ export function SectionHeading({
       <p className="font-mono text-xs tracking-[0.3em] text-accent/70">
         {index}
       </p>
-      <h2 className="mt-2 text-3xl font-medium tracking-tight md:text-4xl">
+      <h2 className="font-display mt-2 text-3xl font-medium tracking-tight md:text-4xl">
         {title}
       </h2>
       <p className="mt-3 max-w-lg text-sm text-muted">{subtitle}</p>

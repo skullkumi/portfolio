@@ -1,3 +1,4 @@
+import { TouchRipple } from "@/components/TouchRipple";
 import { AboutSection } from "@/components/AboutSection";
 import { ContactSection } from "@/components/ContactSection";
 import { CursorParticles } from "@/components/CursorParticles";
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <GlobalAmbientBackground />
       <CursorParticles />
+      <TouchRipple />
       <Navigation />
       <main className="relative z-10">
         <Hero />

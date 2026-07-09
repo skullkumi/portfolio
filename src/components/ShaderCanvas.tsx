@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  adaptQualityScale,
+  detectShaderQuality,
+  type ShaderQualityConfig,
+} from "@/lib/shaderQuality";
+import {
   I_EAT_PIXELS_SHADER,
   I_EAT_PIXELS_SHADER_WEBGL1,
   VERTEX_SHADER_WEBGL2,
@@ -28,13 +33,17 @@ export function ShaderCanvas({
   className = "",
   scrollProgress,
   interactive = false,
-  dprCap = 1,
-  fpsCap = 30,
 }: ShaderCanvasProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const rafRef = useRef(0);
+  const qualityRef = useRef<ShaderQualityConfig | null>(null);
+  const scaleRef = useRef(1);
+  const marchRef = useRef(12);
+  const innerRef = useRef(6);
+  const fpsRef = useRef(30);
+  const frameTimesRef = useRef<number[]>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [useShader, setUseShader] = useState(true);
 
@@ -47,6 +56,13 @@ export function ShaderCanvas({
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
     if (!wrap || !canvas) return;
+
+    const baseQuality = detectShaderQuality();
+    qualityRef.current = baseQuality;
+    scaleRef.current = baseQuality.qualityScale;
+    marchRef.current = baseQuality.marchSteps;
+    innerRef.current = baseQuality.innerSteps;
+    fpsRef.current = baseQuality.fpsCap;
 
     const gl2 = canvas.getContext("webgl2", {
       antialias: false,
@@ -119,6 +135,12 @@ export function ShaderCanvas({
     const uMouse = gl.getUniformLocation(program, "u_mouse");
     const uTime = gl.getUniformLocation(program, "u_time");
     const uScroll = gl.getUniformLocation(program, "u_scroll");
+    const uMaxSteps = gl.getUniformLocation(program, "u_maxSteps");
+    const uInnerSteps = gl.getUniformLocation(program, "u_innerSteps");
+    const uPixelScale = gl.getUniformLocation(program, "u_pixelScale");
+
+    const isDesktop = !window.matchMedia("(pointer: coarse)").matches;
+    const basePixelScale = isDesktop ? 2.0 : 1.0;
 
     let intersecting = true;
     const io = new IntersectionObserver(
@@ -130,12 +152,14 @@ export function ShaderCanvas({
     io.observe(wrap);
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
+      const q = qualityRef.current ?? baseQuality;
+      const dpr = Math.min(window.devicePixelRatio || 1, q.dprCap);
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
       if (w < 2 || h < 2) return;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
+      const scale = scaleRef.current;
+      canvas.width = Math.max(2, Math.floor(w * dpr * scale));
+      canvas.height = Math.max(2, Math.floor(h * dpr * scale));
       gl.viewport(0, 0, canvas.width, canvas.height);
       mouseRef.current = {
         x: canvas.width * 0.5,
@@ -159,25 +183,56 @@ export function ShaderCanvas({
     };
     if (interactive) window.addEventListener("mousemove", onMove);
 
-    const frameInterval = 1000 / fpsCap;
-    let lastDraw = 0;
+    let lastDraw = performance.now();
     const start = performance.now();
+    let adaptCheckAt = 0;
 
     const render = (now: number) => {
       rafRef.current = requestAnimationFrame(render);
 
       const scrolledPast = (scrollProgress?.current ?? 0) > 0.12;
       if (!intersecting || document.hidden || scrolledPast) return;
+
+      const frameInterval = 1000 / fpsRef.current;
       if (now - lastDraw < frameInterval) return;
 
+      const frameMs = now - lastDraw;
       lastDraw = now;
+
+      if (now - adaptCheckAt > 900) {
+        adaptCheckAt = now;
+        const samples = frameTimesRef.current;
+        if (samples.length >= 4) {
+          const avg =
+            samples.reduce((sum, v) => sum + v, 0) / samples.length;
+          const adapted = adaptQualityScale(
+            qualityRef.current ?? baseQuality,
+            scaleRef.current,
+            avg,
+            frameInterval,
+          );
+          const prevScale = scaleRef.current;
+          scaleRef.current = adapted.scale;
+          marchRef.current = adapted.marchSteps;
+          innerRef.current = adapted.innerSteps;
+          fpsRef.current = adapted.fpsCap;
+          if (Math.abs(prevScale - adapted.scale) > 0.04) resize();
+        }
+        frameTimesRef.current = [];
+      } else if (frameMs > 0 && frameMs < 200) {
+        const bucket = frameTimesRef.current;
+        bucket.push(frameMs);
+        if (bucket.length > 12) bucket.shift();
+      }
+
       if (canvas.width > 0 && canvas.height > 0) {
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform2f(uMouse, mouseRef.current.x, mouseRef.current.y);
         gl.uniform1f(uTime, (now - start) / 1000);
-        if (uScroll) {
-          gl.uniform1f(uScroll, scrollProgress?.current ?? 0);
-        }
+        if (uScroll) gl.uniform1f(uScroll, scrollProgress?.current ?? 0);
+        if (uMaxSteps) gl.uniform1f(uMaxSteps, marchRef.current);
+        if (uInnerSteps) gl.uniform1f(uInnerSteps, innerRef.current);
+        if (uPixelScale) gl.uniform1f(uPixelScale, basePixelScale);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
     };
@@ -190,7 +245,7 @@ export function ShaderCanvas({
       ro.disconnect();
       if (interactive) window.removeEventListener("mousemove", onMove);
     };
-  }, [dprCap, fpsCap, interactive, scrollProgress]);
+  }, [interactive, scrollProgress]);
 
   if (!useShader) {
     return <ShaderFallback className={className} />;
@@ -198,7 +253,11 @@ export function ShaderCanvas({
 
   return (
     <div ref={wrapRef} className={`absolute inset-0 ${className}`}>
-      <canvas ref={canvasRef} className="block h-full w-full" />
+      <canvas
+        ref={canvasRef}
+        className="block h-full w-full"
+        style={{ imageRendering: "auto" }}
+      />
       {errorMsg && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#0a0a12] p-4 text-center font-mono text-[10px] text-accent-magenta">
           <span>shader error</span>
